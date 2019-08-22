@@ -83,32 +83,35 @@ int countMine(int x, int y)
 
 int setMap(int x, int y, int pointx, int pointy)
 {
+	if (pointx < 1 || pointx > x ||
+		pointy < 1 || pointy > y ||
+		g_markMap[pointx][pointy] == DISPLAYNUM)
+	{
+		return 0;
+	}
+
+	if (g_map[pointx][pointy] == MINE)
+	{
+		return 1;
+	}
+
+	g_markMap[pointx][pointy] = DISPLAYNUM;
+	g_win--;
+
+	if (g_map[pointx][pointy] != 0)
+	{
+		return 0;
+	}
+
 	int i, j;
-	if (pointx <= x && pointx > 0 && pointy <= y && pointy > 0 && g_markMap[pointx][pointy] != DISPLAYNUM)
-	{ 
-		if (g_map[pointx][pointy] == MINE)
+	for (i = pointx - 1; i <= pointx + 1; i++)
+	{
+		for (j = pointy - 1; j <= pointy + 1; j++)
 		{
-			return 1;
-		}
-		else if (g_map[pointx][pointy] != 0)
-		{
-			g_markMap[pointx][pointy] = DISPLAYNUM;
-			g_win--;
-			return 0;
-		}
-		else
-		{
-			g_markMap[pointx][pointy] = DISPLAYNUM;
-			g_win--;
-			for (i = -1; i <= 1; i++)
-			{
-				for (j = -1; j <= 1; j++)
-				{
-					setMap(x, y, pointx + i, pointy + j);
-				}
-			}
+			setMap(x, y, i, j);
 		}
 	}
+
 	return 0;
 }
 
