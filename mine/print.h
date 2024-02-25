@@ -16,7 +16,10 @@ void print_set();
 void print_exit();
 
 enum{
-	EASY, MID, HARD, FREE
+	EASY,
+	MID,
+	HARD,
+	FREE
 };
 void print_easy();
 void print_mid();
